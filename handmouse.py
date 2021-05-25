@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import time,datetime
-from pynput.mouse import Button,Controller
+from pynput.keyboard import Key,Controller
 from multiprocessing import Process, Lock
 
 mp_drawing = mp.solutions.drawing_utils
@@ -59,7 +59,8 @@ class HandSign:
                     if text=='yeah':
                         key_found+=1
                 if key_found==2 and (time1-time0)>=wait:
-                    mouse.click(Button.left,1)
+                    keyboard.press(Key.right)
+                    keyboard.release(Key.right)
                     time0=round(time.time())
                     print("[",datetime.datetime.now(),"]"," Detected.")
                     key_found=0
@@ -126,6 +127,6 @@ class HandSign:
         return img
     
 if __name__=="__main__":
-    mouse=Controller()
+    keyboard=Controller()
     hand_sign=HandSign('hand_recognition_model.xml')
     hand_sign.watch(detection_conf=0.5,tracking_conf=0.5)
