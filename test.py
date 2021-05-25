@@ -127,4 +127,4 @@ class HandSign:
 
 if __name__=="__main__":
     hand_sign=HandSign('hand_recognition_model.xml')
-    hand_sign.watch(HandSign.numbers)
+    hand_sign.watch(HandSign.numbers,detection_conf=0.5,tracking_conf=0.5)
