@@ -2,7 +2,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 import time
-import pydirectinput as pdi
+from pynput.mouse import Button,Controller
 
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands #hand solution
@@ -20,6 +20,7 @@ class HandSign:
         self.model_file=model
         self.model=self.load_model(model)
     def watch(self,detection_conf=0.8,tracking_conf=0.6,wait=2):
+        mouse=Controller()
         knn=self.model
         hands=self.hand_recognition(2,detection_conf,tracking_conf)
         cap = cv2.VideoCapture(0)
@@ -49,7 +50,7 @@ class HandSign:
                     idx=self.get_label(knn,res)
                     text=self.gesture[idx]
                     if text=='ok':
-                        pdi.click()
+                        mouse.click(Button.left,1)
                         time.sleep(wait)
                         cv2.putText(img,
                                     text='NEXT',
